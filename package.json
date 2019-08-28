@@ -1,0 +1,25 @@
+{
+  "name": "redux-training",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "./node_modules/.bin/babel-node ./src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nwoodard-cs/redux-training.git"
+  },
+  "author": "Nicole Woodard",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nwoodard-cs/redux-training/issues"
+  },
+  "homepage": "https://github.com/nwoodard-cs/redux-training#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1"
+  }
+}
