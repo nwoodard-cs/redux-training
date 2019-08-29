@@ -1,94 +1,36 @@
-import expect from 'expect'
+import C from './constants'
+import React from 'react'
+import { render } from 'react-dom'
+import routes from './routes'
+import sampleData from './initialState'
 import storeFactory from './store'
+import { Provider } from 'react-redux'
+import { addError } from './actions'
 
-import { 
-	addError,
-	clearError, 
-	changeSuggestions, 
-	clearSuggestions 
-} from './actions'
+const initialState = (localStorage["redux-store"]) ?
+    JSON.parse(localStorage["redux-store"]) :
+    sampleData
 
-const store = storeFactory()
+const saveState = () => 
+    localStorage["redux-store"] = JSON.stringify(store.getState())
 
-store.dispatch(
-    addError("something went wrong")
+const handleError = error => {
+	store.dispatch(
+		addError(error.message)
+	)
+}
+
+const store = storeFactory(initialState)
+store.subscribe(saveState)
+
+window.React = React
+window.store = store
+
+window.addEventListener("error", handleError)
+
+render(
+	<Provider store={store}>
+	   {routes}
+	</Provider>,
+  document.getElementById('react-container')
 )
-
-expect(store.getState().errors)
-  .toEqual(["something went wrong"])
-
-console.log(`
-
-    addError() Action Creator Works!!!
-
-`)
-
-store.dispatch(
-    clearError(0)
-)
-
-expect(store.getState().errors)
-  .toEqual([])
-
-console.log(`
-
-    clearError() Action Creator Works!!!
-
-`)
-
-
-
-
-
-
-
-
-
-
-
-//
-// Challenge: build changeSuggestios() Action Creator
-//
-
-store.dispatch(
-    changeSuggestions(['One', 'Two', 'Three'])
-)
-      
-expect(store.getState().resortNames.suggestions)
-    .toEqual(['One', 'Two', 'Three'])
-
-console.log(`
-
-    changeSuggestions() Action Creator Works!!!
-
-`)   
-
-
-
-
-
-
-
-
-
-
-
-//
-// Challenge: build clearSuggestions() Action Creator
-// 
-   
-
-    
-store.dispatch(clearSuggestions())
-
-expect(store.getState().resortNames.suggestions).toEqual([])
-        
-console.log(`
-
-    clearSuggestions() Action Creator Works!!!
-
-`)  
-
-
-
-
